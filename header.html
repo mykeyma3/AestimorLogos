@@ -1,0 +1,96 @@
+<!-- header.html -->
+<style>
+  header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    display: flex; align-items: center; padding: 0 24px;
+    background: rgba(0, 0, 0, 0.85); z-index: 300;
+  }
+  .waffle {
+    width: 30px; height: 30px;
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 5px; cursor: pointer; transition: transform 0.3s;
+    margin-right: 16px;
+  }
+  .waffle div {
+    background: #ECEDEF;
+    border-radius: 50%;
+    width: 6px; height: 6px;
+    transition: background 0.3s;
+  }
+  .waffle.open { transform: rotate(90deg); }
+  .waffle.open div { background: #4CAF50; }
+  .logo { font-weight: 600; font-size: 1.125rem; color: #ECEDEF; }
+
+  nav.nav-drawer {
+    position: fixed; top: 60px; left: 0;
+    width: 280px; height: calc(100% - 60px);
+    background: #f0f0f0; color: #333;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.6);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 260; padding: 24px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  nav.nav-drawer.open { transform: translateX(0); }
+  .menu-options { list-style: none; margin-bottom: 24px; }
+  .menu-options li { margin-bottom: 12px; border-radius: 8px; transition: background 0.3s; }
+  .menu-options li a { display: block; padding: 10px; color: #333; font-size: 1rem; text-decoration: none; }
+  .menu-options li:hover { background: #e0e0e0; cursor: pointer; }
+  .menu-image {
+    width: 100%; height: 140px; background: #ddd;
+    border-radius: 8px; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .menu-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+</style>
+
+<header role="banner">
+  <div class="waffle" id="waffle" aria-label="Toggle navigation" aria-expanded="false">
+    <div></div><div></div><div></div>
+    <div></div><div></div><div></div>
+    <div></div><div></div><div></div>
+  </div>
+  <div class="logo">Aestimor</div>
+</header>
+
+<nav class="nav-drawer" id="navDrawer" role="navigation" aria-hidden="true">
+  <ul class="menu-options">
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/WATER_2025.png"><a href="#">Home</a></li>
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/SPACE_2025.png"><a href="#">Products</a></li>
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/CITY_2025.png"><a href="#">Solutions</a></li>
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/EARTH_2025.png"><a href="#">Pricing</a></li>
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/WOODS_2025.png"><a href="#">About</a></li>
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/WATER_2025.png"><a href="#">Blog</a></li>
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/SPACE_2025.png"><a href="#">Docs</a></li>
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/CITY_2025.png"><a href="#">Careers</a></li>
+    <li class="menu-option" data-img="https://github.com/mykeyma3/AestimorLogos/raw/main/WOODS_2025.png"><a href="#">Contact</a></li>
+  </ul>
+  <div class="menu-image">
+    <img src="https://github.com/mykeyma3/AestimorLogos/raw/main/WOODS_2025.png" alt="Menu Preview" id="menuImg">
+  </div>
+</nav>
+
+<script>
+  const waffle = document.getElementById("waffle"),
+        drawer = document.getElementById("navDrawer");
+
+  waffle.addEventListener("click", () => {
+    const isOpen = drawer.classList.toggle("open");
+    waffle.classList.toggle("open", isOpen);
+    waffle.setAttribute("aria-expanded", isOpen);
+    drawer.setAttribute("aria-hidden", !isOpen);
+  });
+
+  waffle.addEventListener("mouseenter", () => drawer.classList.add("open"));
+  drawer.addEventListener("mouseleave", () => drawer.classList.remove("open"));
+
+  const menuItems = document.querySelectorAll('.menu-option'),
+        menuImg   = document.getElementById('menuImg'),
+        defaultSrc = menuImg.src;
+
+  menuItems.forEach(item => {
+    item.addEventListener('mouseenter', () => { menuImg.src = item.dataset.img; });
+    item.addEventListener('mouseleave', () => { menuImg.src = defaultSrc; });
+  });
+</script>
